@@ -140,14 +140,14 @@ def select_countries(df, countries, remove_countries=None):
         df2 = pd.DataFrame()
         for element in countries:
             df2 = df2.append(pd.DataFrame(df[df[df.columns[0]] == element]))
-        return df2[df2.columns[1:]].sum(axis=0)
+        return df2[df2.columns[1:]].dropna(axis=1, how='all').sum(axis=0)
 
     elif(countries == ["the World"] and remove_countries != None):
         for element in remove_countries:
             df = df[df[df.columns[0]] != element]
 
     # Remove country/territory columns and sum the values of the different regions
-    return df[df.columns[1:]].sum(axis=0)
+    return df[df.columns[1:]].dropna(axis=1, how='all').sum(axis=0)
 
 
 def generate_for_country(data, country, remove_countries=None, path=os.getcwd(), show=False, figures=True):
@@ -165,11 +165,11 @@ def generate_for_country(data, country, remove_countries=None, path=os.getcwd(),
 
     # Only keep the country, the date and the number of cases
     confirmed_per_countries = keep_country_date_and_quantities(
-        confirmed).fillna(value=0)
+        confirmed)#.fillna()
     recovered_per_countries = keep_country_date_and_quantities(
-        recovered).fillna(value=0)
+        recovered)#.fillna()
     death_per_countries = keep_country_date_and_quantities(
-        death).fillna(value=0)
+        death)#.fillna()
 
     # Extract the values for a specific country (defined a the begining of the main function)
     if type(country) != type(list()) and type(country) == type(str()):

@@ -46,6 +46,7 @@ summary = generate_for_country(data=data,
                                show=True)
 
 # Return the country name and the last numbers for the cases
+# {'country': 'the World except Mainland China', 'confirmed': 37825, 'recovered': 4298, 'deaths': 1126}
 print(summary)
 ```
 
