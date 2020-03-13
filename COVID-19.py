@@ -1,5 +1,6 @@
 import locale
 import os
+import re
 import requests
 import datetime
 import numpy as np
@@ -360,8 +361,8 @@ def main():
         summaries = list()
         for country in countries:
             i = i + 1
-            print("Process (", i, "/", len_countries, "): ", country, sep="")
-            path = os.path.join(PATH_TO_OUTP, country)
+            print("Process (", i, "/", len_countries, "): ", re.sub('[^\w\-_\. ]', '_', country), sep="")
+            path = os.path.join(PATH_TO_OUTP, re.sub('[^\w\-_\. ]', '_', country))
             ensure_directory(path)
             summaries.append(generate_for_country(
                 data, country, path=path, show=False, figures=GEN_GRAPH))
@@ -383,7 +384,7 @@ def main():
             summaries_sorted_by_crude_death_rate_cases = sorted(summaries, key=lambda k: (
                 float(k['deaths'])/float(k['confirmed'])), reverse=True)
             summaries_sorted_by_current_recovering_rate_cases = sorted(
-                summaries, key=lambda k: (float(k['recovered'])/float(k['confirmed'])), reverse=True)
+                summaries, key=lambda k: (float(k['recovered'])/(float(k['confirmed'])-float(k['deaths']))), reverse=True)
 
             # Display the current cases
             print("\nCurrent cases by country (max to min)")
