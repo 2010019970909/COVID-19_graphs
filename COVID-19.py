@@ -27,7 +27,7 @@ PATH_TO_DATA = os.path.join(os.getcwd(), "data")
 PATH_TO_OUTP = os.path.join(os.getcwd(), "countries")
 
 
-def ensure_directory(directory):
+def ensure_directory(directory: str):
     """
     Try to create a directory if it does not exist yet.
     """
@@ -38,7 +38,7 @@ def ensure_directory(directory):
         print('Error: Creating directory. ' + directory)
 
 
-def download_last_time_series(url, filename, path=PATH_TO_DATA):
+def download_last_time_series(url: str, filename: str, path: str=PATH_TO_DATA):
     """
     Download the url content into the current working directory.
     Here we want to download the time series as csv files.
@@ -47,7 +47,7 @@ def download_last_time_series(url, filename, path=PATH_TO_DATA):
     open(os.path.join(path, filename), 'wb').write(data.content)
 
 
-def download_and_load(urls=URLS_LIST, filenames=FILENAMES_LIST, path=PATH_TO_DATA, offline=False):
+def download_and_load(urls: list=URLS_LIST, filenames: list=FILENAMES_LIST, path: str=PATH_TO_DATA, offline: bool=False):
     """
     Download all the files to a specific path.
     """
@@ -77,7 +77,7 @@ def keep_country_date_and_quantities(df):
     return df[cols]
 
 
-def min_max_date(time_Series_list):
+def min_max_date(time_Series_list: list):
     """
     Find the min and max date values in the time series.
     """
@@ -91,7 +91,7 @@ def min_max_date(time_Series_list):
     return dates.min(), dates.max()
 
 
-def min_max_val(time_Series_list):
+def min_max_val(time_Series_list: list):
     """
     Find the extreme values in the quantities
     """
@@ -105,7 +105,7 @@ def min_max_val(time_Series_list):
     return min(min_val), max(max_val)
 
 
-def validated_countries(df, country_list):
+def validated_countries(df, country_list: list):
     """
     Return country_list with only the validated countries.
     """
@@ -119,7 +119,7 @@ def validated_countries(df, country_list):
     return valid_list
 
 
-def select_countries(df, countries, remove_countries=None):
+def select_countries(df, countries: list, remove_countries: list=None):
     """
     Only keep the summed quantities for a specific country.
     Using a string or a list of string it is possible remove
@@ -151,7 +151,7 @@ def select_countries(df, countries, remove_countries=None):
     return df[df.columns[1:]].dropna(axis=1, how='all').sum(axis=0)
 
 
-def generate_for_country(data, country, remove_countries=None, path=os.getcwd(), show=False, figures=True):
+def generate_for_country(data, country: list, remove_countries: list=None, path: str=os.getcwd(), show: bool=False, figures: bool=True):
     """
     Generate the graph for one country or more.
     Or for the world, minus some countries.
@@ -330,7 +330,7 @@ def main():
     # Select country
     # ["France", "UK", "Italy"] # "Mexico" # "Italy"
     countries = sorted(["the World"])
-    remove_countries = sorted(["Mainland China"])
+    remove_countries = sorted(["China"])
 
     if countries == ["the World"]:
         path = os.path.join(PATH_TO_OUTP, "the World except",
@@ -361,8 +361,8 @@ def main():
         summaries = list()
         for country in countries:
             i = i + 1
-            print("Process (", i, "/", len_countries, "): ", re.sub('[^\w\-_\. ]', '_', country), sep="")
-            path = os.path.join(PATH_TO_OUTP, re.sub('[^\w\-_\. ]', '_', country))
+            print("Process (", i, "/", len_countries, "): ", re.sub(r'[^\w\-_\. ]', '_', country), sep="")
+            path = os.path.join(PATH_TO_OUTP, re.sub(r'[^\w\-_\. ]', '_', country))
             ensure_directory(path)
             summaries.append(generate_for_country(
                 data, country, path=path, show=False, figures=GEN_GRAPH))
