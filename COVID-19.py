@@ -351,6 +351,10 @@ def main():
         print(summary)
 
     if GEN_ALL:
+        ensure_directory(os.path.join(PATH_TO_OUTP, "the World"))
+        world_summary = generate_for_country(
+            data, ["the World"], path=os.path.join(PATH_TO_OUTP, "the World"), show=False, figures=GEN_GRAPH)
+
         # Generate the graph for all the region and for world
         countries = list(data[0][data[0].columns[1]])
         # countries.append('the World')
@@ -366,10 +370,6 @@ def main():
             ensure_directory(path)
             summaries.append(generate_for_country(
                 data, country, path=path, show=False, figures=GEN_GRAPH))
-
-        ensure_directory(os.path.join(PATH_TO_OUTP, "the World"))
-        world_summary = generate_for_country(
-            data, ["the World"], path=os.path.join(PATH_TO_OUTP, "the World"), show=False, figures=GEN_GRAPH)
 
         if GEN_SUMMARIES:
             # Summary of the situation (https://stackoverflow.com/a/73050)
