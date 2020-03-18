@@ -7,7 +7,7 @@ Take a look at the `COVID-19.py` file. You can generate the evolution for any co
 
 See the files in the `countries/<Country>` to take a look at the graphs. The `global_view.pdf` gives a summary of the evolution of the cases (confirmed cases, recovered cases, death cases and current cases). Same thing for the `recovered_view.pdf`, the y axis is limited to the extend of the recovered cases. The `diff_view.pdf` gives the evolution of the variation of the cases. The title of the figures is the same and gives the name of the country/countries, the current numbers for all the cases and a crude death rate.
 
-Be careful with those data. It is known that they are not always accurate (just take a look at the `diff_view.pdf` of the Mainland China, due to the change of test methodology and other). Also due to the outbreak, the test methodology used to confirm the cases is known to increase the confirmation of severe cases.
+Be careful with those data. It is known that they are not always accurate (just take a look at the `diff_view.pdf` of the (Mainland) China, due to the change of test methodology and other). Also due to the outbreak, the test methodology used to confirm the cases is known to increase the confirmation of severe cases.
 
 From the function `main()` we could create the following Python script (not tested):
 
