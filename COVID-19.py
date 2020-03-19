@@ -387,24 +387,24 @@ def main():
                 summaries, key=lambda k: (float(k['recovered'])/(float(k['confirmed'])-float(k['deaths']))), reverse=True)
 
             # Display the current cases
-            print("\nCurrent cases by country (max to min)")
+            print("\Active cases by country (max to min)")
             print("Wolrd", "\n    Current cases:",
                   world_summary['confirmed']-world_summary['recovered']-world_summary['deaths'])
             i = 1
             for element in summaries_sorted_by_current_cases:
-                print(i, "-", element['country'], "\n    Current cases:",
+                print(i, "-", element['country'], "\n    Active cases:",
                       element['confirmed']-element['recovered']-element['deaths'])
                 i = i + 1
             input("Press any key to continue")
 
             # Display the amount of confirmed cases
-            print("\nCurrent confirmed cases (max to min)")
+            print("\nConfirmed cases (max to min)")
             print("Wolrd", "\n    Current confirmed cases:",
                   world_summary['confirmed'])
             i = 1
             for element in summaries_sorted_by_confirmed_cases:
                 print(
-                    i, "-", element['country'], "\n    Current confirmed cases:", element['confirmed'])
+                    i, "-", element['country'], "\n    Confirmed cases:", element['confirmed'])
                 i = i + 1
             input("Press any key to continue")
 
