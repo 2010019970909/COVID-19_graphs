@@ -387,7 +387,7 @@ def main():
                 summaries, key=lambda k: (float(k['recovered'])/(float(k['confirmed'])-float(k['deaths']))), reverse=True)
 
             # Display the current cases
-            print("\Active cases by country (max to min)")
+            print("\nActive cases by country (max to min)")
             print("Wolrd", "\n    Current cases:",
                   world_summary['confirmed']-world_summary['recovered']-world_summary['deaths'])
             i = 1
