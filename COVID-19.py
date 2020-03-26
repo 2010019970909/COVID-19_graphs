@@ -15,9 +15,15 @@ register_matplotlib_converters()
 locale.setlocale(locale.LC_NUMERIC, '')
 
 # Data source
-URL_CONFIRMED = "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_19-covid-Confirmed.csv"
-URL_RECOVERED = "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_19-covid-Recovered.csv"
-URL_DEATHS = "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_19-covid-Deaths.csv"
+#URL_CONFIRMED = "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_19-covid-Confirmed.csv"
+#URL_RECOVERED = "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_19-covid-Recovered.csv"
+#URL_DEATHS = "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_19-covid-Deaths.csv"
+
+URL_CONFIRMED = "https://raw.githubusercontent.com/bumbeishvili/covid19-daily-data/master/time_series_19-covid-Confirmed.csv"
+URL_RECOVERED = "https://raw.githubusercontent.com/bumbeishvili/covid19-daily-data/master/time_series_19-covid-Recovered.csv"
+URL_DEATHS = "https://raw.githubusercontent.com/bumbeishvili/covid19-daily-data/master/time_series_19-covid-Deaths.csv"
+
+
 
 URLS_LIST = [URL_CONFIRMED, URL_RECOVERED, URL_DEATHS]
 FILENAMES_LIST = ['confirmed.csv', 'recovered.csv', 'deaths.csv']
@@ -204,10 +210,10 @@ def generate_for_country(data, country: list, remove_countries: list=None, path:
 
         # Text to fill the graph
         legend = ['Confirmed cases', 'Recovered cases',
-                  'Death cases', 'Current cases']
+                  'Death cases', 'Active cases']
 
         last_values = 'Confirmed: ' + str(int(confirmed[-1])) +\
-            '  Currents: ' + str(int(confirmed[-1]-death[-1]-recovered[-1])) +\
+            '  Active: ' + str(int(confirmed[-1]-death[-1]-recovered[-1])) +\
             '\nRecovered: ' + str(int(recovered[-1])) +\
             '  Deaths: ' + str(int(death[-1])) +\
             '  Crude death rate: ' + str(death[-1]/confirmed[-1])
@@ -281,7 +287,7 @@ def generate_for_country(data, country: list, remove_countries: list=None, path:
         plt.grid()
 
         ax3 = plt.subplot(4, 1, 4, sharex=ax2)
-        plt.ylabel('New\ncurrents')
+        plt.ylabel('New\nactive')
         plt.bar(current_diff.index, current_diff, color='orange')
         plt.grid()
 
@@ -365,11 +371,15 @@ def main():
         summaries = list()
         for country in countries:
             i = i + 1
-            print("Process (", i, "/", len_countries, "): ", re.sub(r'[^\w\-_\. ]', '_', country), sep="")
+            print("Process (", i, "/", len_countries, "): ", re.sub(r'[^\w\-_\. ]', '_', country), sep="", end="")
             path = os.path.join(PATH_TO_OUTP, re.sub(r'[^\w\-_\. ]', '_', country))
             ensure_directory(path)
-            summaries.append(generate_for_country(
-                data, country, path=path, show=False, figures=GEN_GRAPH))
+            try:
+                s = generate_for_country(data, country, path=path, show=False, figures=GEN_GRAPH)
+                summaries.append(s)
+                print()
+            except:
+                print("    ERROR (Check dataset)")
 
         if GEN_SUMMARIES:
             # Summary of the situation (https://stackoverflow.com/a/73050)
