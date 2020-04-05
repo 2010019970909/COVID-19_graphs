@@ -21,7 +21,7 @@ locale.setlocale(locale.LC_NUMERIC, '')
 
 URL_CONFIRMED = "https://raw.githubusercontent.com/bumbeishvili/covid19-daily-data/master/time_series_19-covid-Confirmed.csv"
 URL_RECOVERED = "https://raw.githubusercontent.com/bumbeishvili/covid19-daily-data/master/time_series_19-covid-Recovered.csv"
-URL_DEATHS = "https://raw.githubusercontent.com/bumbeishvili/covid19-daily-data/master/time_series_19-covid-Deaths.csv"
+URL_DEATHS    = "https://raw.githubusercontent.com/bumbeishvili/covid19-daily-data/master/time_series_19-covid-Deaths.csv"
 
 
 
