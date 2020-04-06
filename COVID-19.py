@@ -21,9 +21,7 @@ locale.setlocale(locale.LC_NUMERIC, '')
 
 URL_CONFIRMED = "https://raw.githubusercontent.com/bumbeishvili/covid19-daily-data/master/time_series_19-covid-Confirmed.csv"
 URL_RECOVERED = "https://raw.githubusercontent.com/bumbeishvili/covid19-daily-data/master/time_series_19-covid-Recovered.csv"
-URL_DEATHS    = "https://raw.githubusercontent.com/bumbeishvili/covid19-daily-data/master/time_series_19-covid-Deaths.csv"
-
-
+URL_DEATHS = "https://raw.githubusercontent.com/bumbeishvili/covid19-daily-data/master/time_series_19-covid-Deaths.csv"
 
 URLS_LIST = [URL_CONFIRMED, URL_RECOVERED, URL_DEATHS]
 FILENAMES_LIST = ['confirmed.csv', 'recovered.csv', 'deaths.csv']
@@ -44,7 +42,7 @@ def ensure_directory(directory: str):
         print('Error: Creating directory. ' + directory)
 
 
-def download_last_time_series(url: str, filename: str, path: str=PATH_TO_DATA):
+def download_last_time_series(url: str, filename: str, path: str = PATH_TO_DATA):
     """
     Download the url content into the current working directory.
     Here we want to download the time series as csv files.
@@ -53,7 +51,7 @@ def download_last_time_series(url: str, filename: str, path: str=PATH_TO_DATA):
     open(os.path.join(path, filename), 'wb').write(data.content)
 
 
-def download_and_load(urls: list=URLS_LIST, filenames: list=FILENAMES_LIST, path: str=PATH_TO_DATA, offline: bool=False):
+def download_and_load(urls: list = URLS_LIST, filenames: list = FILENAMES_LIST, path: str = PATH_TO_DATA, offline: bool = False):
     """
     Download all the files to a specific path.
     """
@@ -125,7 +123,7 @@ def validated_countries(df, country_list: list):
     return valid_list
 
 
-def select_countries(df, countries: list, remove_countries: list=None):
+def select_countries(df, countries: list, remove_countries: list = None):
     """
     Only keep the summed quantities for a specific country.
     Using a string or a list of string it is possible remove
@@ -157,7 +155,7 @@ def select_countries(df, countries: list, remove_countries: list=None):
     return df[df.columns[1:]].dropna(axis=1, how='all').sum(axis=0)
 
 
-def generate_for_country(data, country: list, remove_countries: list=None, path: str=os.getcwd(), show: bool=False, figures: bool=True):
+def generate_for_country(data, country: list, remove_countries: list = None, path: str = os.getcwd(), show: bool = False, figures: bool = True):
     """
     Generate the graph for one country or more.
     Or for the world, minus some countries.
@@ -172,11 +170,11 @@ def generate_for_country(data, country: list, remove_countries: list=None, path:
 
     # Only keep the country, the date and the number of cases
     confirmed_per_countries = keep_country_date_and_quantities(
-        confirmed)#.fillna()
+        confirmed)  # .fillna()
     recovered_per_countries = keep_country_date_and_quantities(
-        recovered)#.fillna()
+        recovered)  # .fillna()
     death_per_countries = keep_country_date_and_quantities(
-        death)#.fillna()
+        death)  # .fillna()
 
     # Extract the values for a specific country (defined a the begining of the main function)
     if type(country) != type(list()) and type(country) == type(str()):
@@ -371,11 +369,14 @@ def main():
         summaries = list()
         for country in countries:
             i = i + 1
-            print("Process (", i, "/", len_countries, "): ", re.sub(r'[^\w\-_\. ]', '_', country), sep="", end="")
-            path = os.path.join(PATH_TO_OUTP, re.sub(r'[^\w\-_\. ]', '_', country))
+            print("Process (", i, "/", len_countries, "): ",
+                  re.sub(r'[^\w\-_\. ]', '_', country), sep="", end="")
+            path = os.path.join(PATH_TO_OUTP, re.sub(
+                r'[^\w\-_\. ]', '_', country))
             ensure_directory(path)
             try:
-                s = generate_for_country(data, country, path=path, show=False, figures=GEN_GRAPH)
+                s = generate_for_country(
+                    data, country, path=path, show=False, figures=GEN_GRAPH)
                 summaries.append(s)
                 print()
             except:
