@@ -359,6 +359,8 @@ def main():
         world_summary = generate_for_country(
             data, ["the World"], path=os.path.join(PATH_TO_OUTP, "the World"), show=False, figures=GEN_GRAPH)
 
+        generate_for_country(data, ["Belgium"], path=os.path.join(PATH_TO_OUTP, "Belgium"), show=False, figures=GEN_GRAPH)
+
         # Generate the graph for all the region and for world
         countries = list(data[0][data[0].columns[1]])
         # countries.append('the World')
